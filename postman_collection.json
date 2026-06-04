@@ -1,0 +1,236 @@
+{
+  "info": {
+    "name": "Generador de Respuestas Aleatorias",
+    "description": "Colección de ejemplos para la API de Generador de Respuestas Aleatorias",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Información General",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": [""]
+        }
+      }
+    },
+    {
+      "name": "Obtener Tipos de Respuestas",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/tipos",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["tipos"]
+        }
+      }
+    },
+    {
+      "name": "Pregunta Positiva",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"texto\": \"¿Conseguiré el trabajo que deseo?\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/preguntar",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["preguntar"]
+        }
+      }
+    },
+    {
+      "name": "Pregunta Negativa",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"texto\": \"¿Esto nunca funcionará?\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/preguntar",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["preguntar"]
+        }
+      }
+    },
+    {
+      "name": "Pregunta Filosófica",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"texto\": \"¿Cuál es el verdadero significado de la vida?\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/preguntar",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["preguntar"]
+        }
+      }
+    },
+    {
+      "name": "Pregunta Humorística",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"texto\": \"¿Esto es una broma?\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/preguntar",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["preguntar"]
+        }
+      }
+    },
+    {
+      "name": "Respuesta Aleatoria",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/respuesta-aleatoria",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["respuesta-aleatoria"]
+        }
+      }
+    },
+    {
+      "name": "Respuestas Positivas",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/respuestas/positivas",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["respuestas", "positivas"]
+        }
+      }
+    },
+    {
+      "name": "Respuestas Negativas",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/respuestas/negativas",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["respuestas", "negativas"]
+        }
+      }
+    },
+    {
+      "name": "Respuestas Neutrales",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/respuestas/neutrales",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["respuestas", "neutrales"]
+        }
+      }
+    },
+    {
+      "name": "Respuestas Filosóficas",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/respuestas/filosoficas",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["respuestas", "filosoficas"]
+        }
+      }
+    },
+    {
+      "name": "Respuestas Humorísticas",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/respuestas/humoristicas",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["respuestas", "humoristicas"]
+        }
+      }
+    },
+    {
+      "name": "Lote de Preguntas",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "[\n  {\"texto\": \"¿Tendré suerte?\"},\n  {\"texto\": \"¿Debo cambiar de carrera?\"},\n  {\"texto\": \"¿Funcionará mi idea?\"},\n  {\"texto\": \"¿Esto tiene sentido?\"},\n  {\"texto\": \"¿Es una broma?\"}\n]"
+        },
+        "url": {
+          "raw": "http://localhost:8000/preguntar-lote",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["preguntar-lote"]
+        }
+      }
+    }
+  ]
+}

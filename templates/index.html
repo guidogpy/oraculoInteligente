@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Oráculo Inteligente - Generador de Respuestas</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --primary-light: #818cf8;
+      --secondary: #ec4899;
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --info: #06b6d4;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 3s infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    .container-main {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      width: 100%;
+    }
+
+    .header {
+      text-align: center;
+      color: white;
+      margin-bottom: 40px;
+      animation: fadeInDown 0.8s ease-out;
+    }
+
+    .header h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .header p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      margin: 0;
+    }
+
+    .crystal-ball {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      display: inline-block;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card-main {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      padding: 40px;
+      animation: fadeInUp 0.8s ease-out 0.2s both;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    .form-label {
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .textarea-wrapper {
+      position: relative;
+    }
+
+    #pregunta {
+      width: 100%;
+      min-height: 120px;
+      padding: 15px;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-family: inherit;
+      resize: vertical;
+      transition: all 0.3s ease;
+    }
+
+    #pregunta:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+      background: linear-gradient(to bottom, #fafbff, white);
+    }
+
+    .char-count {
+      text-align: right;
+      font-size: 0.85rem;
+      color: #9ca3af;
+      margin-top: 5px;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 14px 30px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
+    }
+
+    .btn-submit:active {
+      transform: translateY(0);
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .resultado-container {
+      margin-top: 35px;
+      padding-top: 35px;
+      border-top: 2px solid #f3f4f6;
+    }
+
+    .resultado-container h3 {
+      color: #1f2937;
+      font-weight: 700;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .resultado-box {
+      background: linear-gradient(135deg, #f8f9fa 0%, #f0f1f7 100%);
+      border-left: 5px solid var(--primary);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 15px;
+      animation: slideInLeft 0.5s ease-out;
+    }
+
+    .resultado-box.pensando {
+      border-left-color: var(--warning);
+      text-align: center;
+    }
+
+    .resultado-box.error {
+      border-left-color: var(--danger);
+      background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+    }
+
+    .resultado-box.success {
+      border-left-color: var(--success);
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .resultado-label {
+      font-weight: 600;
+      color: #4b5563;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+    }
+
+    .resultado-value {
+      color: #1f2937;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    .respuesta-text {
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--primary-dark);
+      padding: 10px 0;
+    }
+
+    .meta-info {
+      font-size: 0.85rem;
+      color: #9ca3af;
+      margin-top: 10px;
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .meta-info span {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .spinner-border-sm {
+      width: 1.2rem;
+      height: 1.2rem;
+      border-width: 0.2em;
+    }
+
+    .empty-state {
+      text-align: center;
+      color: #9ca3af;
+      padding: 30px 20px;
+    }
+
+    .empty-state i {
+      font-size: 3rem;
+      color: #d1d5db;
+      margin-bottom: 15px;
+    }
+
+    .select-category {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      margin-bottom: 25px;
+    }
+
+    .category-option {
+      position: relative;
+    }
+
+    .category-option input[type="radio"] {
+      display: none;
+    }
+
+    .category-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px;
+      border: 2px solid #e5e7eb;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      font-weight: 500;
+      background: white;
+      color: #1f2937;
+    }
+
+    .category-option input[type="radio"]:checked + .category-label {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      border-color: var(--primary-dark);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .category-label:hover {
+      border-color: var(--primary);
+      background: #f9fafb);
+    }
+
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 2rem;
+      }
+
+      .card-main {
+        padding: 25px;
+      }
+
+      .resultado-box {
+        padding: 15px;
+      }
+
+      .select-category {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="stars" id="stars"></div>
+
+  <div class="container-main">
+    <div class="header">
+      <div class="crystal-ball">🔮</div>
+      <h1>Oráculo Inteligente</h1>
+      <p>Haz una pregunta y recibe respuestas generadas por IA</p>
+    </div>
+
+    <div class="card-main">
+      <form id="qform">
+        <div class="form-group">
+          <label class="form-label">
+            <i class="fas fa-wand-magic-sparkles"></i> Tipo de pregunta
+          </label>
+          <div class="select-category">
+            <div class="category-option">
+              <input type="radio" id="cat-amor" name="categoria" value="amor" />
+              <label for="cat-amor" class="category-label">
+                <i class="fas fa-heart"></i> Amor
+              </label>
+            </div>
+            <div class="category-option">
+              <input type="radio" id="cat-trabajo" name="categoria" value="trabajo" />
+              <label for="cat-trabajo" class="category-label">
+                <i class="fas fa-briefcase"></i> Trabajo
+              </label>
+            </div>
+            <div class="category-option">
+              <input type="radio" id="cat-dinero" name="categoria" value="dinero" />
+              <label for="cat-dinero" class="category-label">
+                <i class="fas fa-coins"></i> Dinero
+              </label>
+            </div>
+            <div class="category-option">
+              <input type="radio" id="cat-miedo" name="categoria" value="miedo" />
+              <label for="cat-miedo" class="category-label">
+                <i class="fas fa-heart-crack"></i> Miedo
+              </label>
+            </div>
+            <div class="category-option">
+              <input type="radio" id="cat-duda" name="categoria" value="duda" />
+              <label for="cat-duda" class="category-label">
+                <i class="fas fa-circle-question"></i> Duda
+              </label>
+            </div>
+            <div class="category-option">
+              <input type="radio" id="cat-general" name="categoria" value="general" checked />
+              <label for="cat-general" class="category-label">
+                <i class="fas fa-star"></i> General
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="pregunta" class="form-label">
+            <i class="fas fa-question-circle"></i> Tu pregunta
+          </label>
+          <div class="textarea-wrapper">
+            <textarea id="pregunta" name="pregunta" placeholder="¿Qué deseas saber? Haz tu pregunta aquí..."></textarea>
+          </div>
+          <div class="char-count">
+            <span id="charCount">0</span> / 500 caracteres
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit">
+          <i class="fas fa-wand-magic-sparkles"></i>
+          <span>Consultar al Oráculo</span>
+        </button>
+      </form>
+
+      <div class="resultado-container">
+        <h3>
+          <i class="fas fa-sparkles"></i> Respuesta
+        </h3>
+        <div id="resultado">
+          <div class="empty-state">
+            <i class="fas fa-scroll"></i>
+            <p>La respuesta del oráculo aparecerá aquí...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Generar estrellas de fondo
+    function createStars() {
+      const starsContainer = document.getElementById('stars');
+      for (let i = 0; i < 50; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.width = Math.random() * 3 + 'px';
+        star.style.height = star.style.width;
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.animationDelay = Math.random() * 3 + 's';
+        starsContainer.appendChild(star);
+      }
+    }
+    createStars();
+
+    // Contador de caracteres
+    const textarea = document.getElementById('pregunta');
+    const charCount = document.getElementById('charCount');
+    textarea.addEventListener('input', () => {
+      charCount.textContent = textarea.value.length;
+      textarea.style.maxLength = 500;
+    });
+
+    const form = document.getElementById('qform');
+    const resultado = document.getElementById('resultado');
+    const btnSubmit = form.querySelector('.btn-submit');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const texto = document.getElementById('pregunta').value.trim();
+      const categoria = document.querySelector('input[name="categoria"]:checked').value;
+
+      if (!texto) {
+        resultado.innerHTML = '<div class="resultado-box error"><div class="resultado-label">⚠️ Error</div><div class="resultado-value">Por favor, escribe una pregunta.</div></div>';
+        return;
+      }
+
+      // Mostrar estado pensando
+      resultado.innerHTML = '<div class="resultado-box pensando"><div class="spinner-border spinner-border-sm text-primary" role="status"><span class="visually-hidden">Consultando...</span></div><p style="margin-top: 10px;">🤖 El oráculo inteligente está procesando tu pregunta...</p></div>';
+      btnSubmit.disabled = true;
+
+      try {
+        const resp = await fetch('/preguntar-inteligente', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ texto, categoria })
+        });
+
+        if (!resp.ok) {
+          const err = await resp.json();
+          resultado.innerHTML = `<div class="resultado-box error"><div class="resultado-label">❌ Error</div><div class="resultado-value">${err.detail || 'Error en la solicitud'}</div></div>`;
+          btnSubmit.disabled = false;
+          return;
+        }
+
+        const data = await resp.json();
+        const timestamp = new Date(data.timestamp).toLocaleString('es-ES', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+
+        resultado.innerHTML = `
+          <div class="resultado-box success">
+            <div class="resultado-label">❓ Tu pregunta</div>
+            <div class="resultado-value">${escapeHtml(data.pregunta)}</div>
+          </div>
+          <div class="resultado-box">
+            <div class="resultado-label">✨ Respuesta del Oráculo</div>
+            <div class="respuesta-text">"${escapeHtml(data.respuesta)}"</div>
+          </div>
+          <div class="meta-info">
+            <span><i class="fas fa-tag"></i> <strong>Tipo:</strong> ${escapeHtml(data.tipo)}</span>
+            <span><i class="fas fa-clock"></i> ${timestamp}</span>
+          </div>
+        `;
+      } catch (err) {
+        resultado.innerHTML = `<div class="resultado-box error"><div class="resultado-label">🔴 Error de Conexión</div><div class="resultado-value">${err.message}</div></div>`;
+      } finally {
+        btnSubmit.disabled = false;
+      }
+    });
+
+    // Sanitizar HTML
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+  </script>
+</body>
+</html>

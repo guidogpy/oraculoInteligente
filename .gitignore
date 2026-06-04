@@ -1,0 +1,26 @@
+# Entornos virtuales de Python
+venv/
+ENV/
+env/
+.env/
+
+# Configuración sensible e información de API Keys
+.env
+
+# Logs del sistema y del servidor
+*.log
+server.log
+
+# Caché y archivos compilados de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Configuraciones de editores e IDEs (VS Code, PyCharm, etc.)
+.vscode/
+.idea/
+.project
+.pydevproject
+.settings/
