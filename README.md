@@ -26,7 +26,7 @@ Una API REST en Python que simula un oráculo generador de respuestas aleatorias
 1. **Clonar o descargar el proyecto**
 
 ```bash
-cd "c:\Users\iln-gcandia\OneDrive - bancobasa.com.py\PROYECTOS\responsa-ai"
+cd "c:\Users\tuUser\PROYECTOS\responsa-ai"
 ```
 
 2. **Instalar las dependencias**
