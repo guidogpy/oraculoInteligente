@@ -26,7 +26,7 @@ Una API REST en Python que simula un oráculo generador de respuestas aleatorias
 1. **Clonar o descargar el proyecto**
 
 ```bash
-cd "c:\Users\iln-gcandia\OneDrive - bancobasa.com.py\PROYECTOS\GHC_TST"
+cd "c:\Users\iln-gcandia\OneDrive - bancobasa.com.py\PROYECTOS\responsa-ai"
 ```
 
 2. **Instalar las dependencias**
@@ -220,7 +220,7 @@ Si no detecta ninguna palabra clave especial, elige un tipo aleatorio.
 ## Estructura del proyecto
 
 ```
-GHC_TST/
+responsa-ai/
 ├── main.py              # API principal con FastAPI
 ├── cliente.py           # Cliente Python para probar la API
 ├── requirements.txt     # Dependencias del proyecto
